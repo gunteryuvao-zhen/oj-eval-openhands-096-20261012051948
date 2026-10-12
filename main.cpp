@@ -44,6 +44,14 @@ pair<int, int> findDepthAndParent(TreeNode* root, int target, int depth, int par
     return right;
 }
 
+// Delete tree to prevent memory leaks
+void deleteTree(TreeNode* root) {
+    if (!root) return;
+    deleteTree(root->left);
+    deleteTree(root->right);
+    delete root;
+}
+
 int main() {
     int q;
     cin >> q;
@@ -58,7 +66,7 @@ int main() {
     cin.ignore(); // Ignore the newline after the last query
     getline(cin, treeLine);
     
-    // Parse the tree data
+    // Parse the tree data - handle multiple spaces
     vector<int> preorder;
     stringstream ss(treeLine);
     int val;
@@ -90,8 +98,8 @@ int main() {
         }
     }
     
-    // Clean up memory
-    // In a production environment, we would implement a proper tree deletion
-    // For OJ purposes, this is often not required
+    // Clean up memory to prevent memory leaks
+    deleteTree(root);
+    
     return 0;
 }
