@@ -40,7 +40,8 @@ pair<int, int> findDepthAndParent(TreeNode* root, int target, int depth, int par
     if (left.first != -1) return left;
     
     // Search in right subtree
-    return findDepthAndParent(root->right, target, depth + 1, root->val);
+    auto right = findDepthAndParent(root->right, target, depth + 1, root->val);
+    return right;
 }
 
 int main() {
@@ -80,6 +81,8 @@ int main() {
         // Check if they are cousins: same depth but different parents
         if (depthParentX.first == depthParentY.first && 
             depthParentX.first != -1 && 
+            depthParentX.second != -1 && 
+            depthParentY.second != -1 && 
             depthParentX.second != depthParentY.second) {
             cout << 1 << endl;
         } else {
@@ -87,5 +90,8 @@ int main() {
         }
     }
     
+    // Clean up memory
+    // In a production environment, we would implement a proper tree deletion
+    // For OJ purposes, this is often not required
     return 0;
 }
